@@ -109,10 +109,12 @@ Optionally add the WORKSPACE to the python search list."
 
 (defun lsp-python-ms--filter-nbsp (str)
   "Filter nbsp entities from STR."
-  (let ((rx "&nbsp;"))
+  (let ((rx "&nbsp;")
+        (rx2 "\\\\_"))
     (when (eq system-type 'windows-nt)
       (setq rx (concat rx "\\|\r")))
-    (replace-regexp-in-string rx " " str)))
+    (replace-regexp-in-string rx2 "_"
+     (replace-regexp-in-string rx " " str))))
 
 (defun lsp-python-ms--language-server-started-callback (workspace _params)
   "Handle the python/languageServerStarted message.
